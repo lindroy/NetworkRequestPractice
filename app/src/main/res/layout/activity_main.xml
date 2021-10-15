@@ -8,10 +8,17 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btnNetworkBanner"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="请求Banner网络数据"
+        android:text="登录"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnLoginWrong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="错误密码登录"
         android:textAllCaps="false" />
 
     <androidx.core.widget.NestedScrollView

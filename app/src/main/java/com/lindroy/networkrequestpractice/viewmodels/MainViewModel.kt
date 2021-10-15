@@ -14,11 +14,21 @@ class MainViewModel : ViewModel() {
 
     private val bannerClickAction = MutableLiveData<Unit>()
 
-    val bannerLiveData = bannerClickAction.switchMap {
-        Repository.getBanners()
+    private val loginAction = MutableLiveData<Boolean>()
+
+    val loginLiveData = loginAction.switchMap {
+        if (it){
+            Repository.login(  "PuKxVxvMzBp2EJM")
+        }else{
+            Repository.login(  "123456")
+        }
     }
 
-    fun getBanners() {
-        bannerClickAction.value = Unit
+    fun login() {
+        loginAction.value = true
+    }
+
+    fun loginWithWrongPwd(){
+        loginAction.value = false
     }
 }

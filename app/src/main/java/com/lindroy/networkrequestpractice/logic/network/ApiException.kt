@@ -9,10 +9,10 @@ import com.lindroy.networkrequestpractice.logic.model.BaseResponse
  */
 data class ApiException(
     val error: String? = "",
-    val msg: String? = "",
-    val errorCode: Int = 0
-):Exception(){
-    constructor(response: BaseResponse<*>) : this(response.errorMsg, response.errorMsg)
+    val errorMsg:String? = "",
+    val errorCode: Int? = 0
+) : Exception() {
+    constructor(response: BaseResponse<*>) : this(response.errorMsg,response.errorMsg, response.errorCode)
 
 //    constructor(errorBody:ErrorBodyModel):this(errorBody.error,errorBody.message)
 

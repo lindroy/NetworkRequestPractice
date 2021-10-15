@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
+import com.lindroy.networkrequestpractice.logic.network.observeParse
 import com.lindroy.networkrequestpractice.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,19 +20,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initObserver()
-        binding.btnNetworkBanner.setOnClickListener {
-            viewModel.getBanners()
-        }
+        binding.btnLogin.setOnClickListener { viewModel.login() }
+        binding.btnLoginWrong.setOnClickListener { viewModel.loginWithWrongPwd() }
     }
 
     private fun initObserver() {
-        viewModel.bannerLiveData.observe(this) {
-            if (it.isSuccess) {
-                Toast.makeText(this, "请求成功", Toast.LENGTH_SHORT).show()
-                binding.tvResult.text = it.getOrNull().toString()
-            } else {
-                Toast.makeText(this, "请求失败", Toast.LENGTH_SHORT).show()
+        viewModel.loginLiveData.observeParse(this) {
+            onSuccess {
+                showToast("登录成功")
+                binding.tvResult.text = it.toString()
+            }
+            onFailure {
+                showToast(it.errorMsg.orEmpty())
+                binding.tvResult.text = it.toString()
             }
         }
+    }
+
+    private fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 }

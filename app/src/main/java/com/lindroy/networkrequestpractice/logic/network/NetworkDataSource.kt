@@ -8,5 +8,5 @@ package com.lindroy.networkrequestpractice.logic.network
 object NetworkDataSource {
     private val apiService = RetrofitBuilder.create<ApiService>()
 
-    suspend fun getBanners() = apiService.getBanners()
+    suspend fun login(pwd: String) = apiService.login(password = pwd)
 }
