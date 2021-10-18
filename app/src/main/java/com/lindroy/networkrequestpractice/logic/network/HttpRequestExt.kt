@@ -1,8 +1,10 @@
 package com.lindroy.networkrequestpractice.logic.network
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.lindroy.networkrequestpractice.logic.model.BaseResponse
+import com.lindroy.networkrequestpractice.logic.network.observer.IStateObserver
 
 /**
  * @author Lin
@@ -24,7 +26,41 @@ fun <T> LiveData<Result<BaseResponse<T>>>.observeParse(
         false -> {
             result.exceptionOrNull()?.also {
                 requestCallback.failureCallback?.invoke(it as ApiException)
-            }?: requestCallback.failureCallback?.invoke(ApiException("未知错误"))
+            } ?: requestCallback.failureCallback?.invoke(ApiException("未知错误"))
         }
     }
 }
+
+fun <T> LiveData<BaseResponse<T>>.observeState(
+    owner: LifecycleOwner,
+    callback: HttpRequestCallback<T>.() -> Unit
+) {
+    val requestCallback = HttpRequestCallback<T>().apply(callback)
+    observe(owner, object : IStateObserver<T> {
+        override fun onStart() {
+            requestCallback.startCallback?.invoke()
+        }
+
+        override fun onSuccess(data: T) {
+            requestCallback.successCallback?.invoke(data)
+        }
+
+        override fun onEmpty() {
+            requestCallback.emptyCallback?.invoke()
+        }
+
+        override fun onFailure(e: ApiException) {
+            requestCallback.failureCallback?.invoke(e)
+        }
+
+        override fun onError(data: T?, e: ApiException) {
+            requestCallback.errorCallback?.invoke(data, e)
+        }
+
+        override fun onFinish() {
+            requestCallback.finishCallback?.invoke()
+        }
+
+    })
+}
+

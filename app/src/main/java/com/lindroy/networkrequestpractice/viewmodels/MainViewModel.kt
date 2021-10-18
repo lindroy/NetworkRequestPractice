@@ -12,15 +12,14 @@ import com.lindroy.networkrequestpractice.logic.repository.Repository
  */
 class MainViewModel : ViewModel() {
 
-    private val bannerClickAction = MutableLiveData<Unit>()
 
     private val loginAction = MutableLiveData<Boolean>()
 
     val loginLiveData = loginAction.switchMap {
-        if (it){
-            Repository.login(  "PuKxVxvMzBp2EJM")
-        }else{
-            Repository.login(  "123456")
+        if (it) {
+            Repository.login("PuKxVxvMzBp2EJM")
+        } else {
+            Repository.login("123456")
         }
     }
 
@@ -28,7 +27,7 @@ class MainViewModel : ViewModel() {
         loginAction.value = true
     }
 
-    fun loginWithWrongPwd(){
+    fun loginWithWrongPwd() {
         loginAction.value = false
     }
 }

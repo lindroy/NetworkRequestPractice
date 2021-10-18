@@ -8,12 +8,8 @@ import com.lindroy.networkrequestpractice.logic.model.BaseResponse
  * @function
  */
 data class ApiException(
-    val error: String? = "",
-    val errorMsg:String? = "",
+    val errorMsg: String? = "",
     val errorCode: Int? = 0
 ) : Exception() {
-    constructor(response: BaseResponse<*>) : this(response.errorMsg,response.errorMsg, response.errorCode)
-
-//    constructor(errorBody:ErrorBodyModel):this(errorBody.error,errorBody.message)
-
+    constructor(response: BaseResponse<*>) : this(response.errorMsg, response.errorCode)
 }
