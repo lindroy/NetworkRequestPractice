@@ -1,17 +1,18 @@
 package com.lindroy.networkrequestpractice.logic.network
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.lindroy.networkrequestpractice.logic.model.BaseResponse
-import com.lindroy.networkrequestpractice.logic.network.observer.IStateObserver
+import com.lindroy.networkrequestpractice.logic.model.ApiResponse
+import com.lindroy.networkrequestpractice.logic.network.base.RequestException
+import com.lindroy.networkrequestpractice.logic.network.base.HttpRequestCallback
+import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
 
 /**
  * @author Lin
  * @date 2021/10/15
  * @function
  */
-fun <T> LiveData<Result<BaseResponse<T>>>.observeParse(
+fun <T> LiveData<Result<ApiResponse<T>>>.observeParse(
     owner: LifecycleOwner,
     callback: HttpRequestCallback<T>.() -> Unit
 ) = observe(owner) { result ->
@@ -20,18 +21,18 @@ fun <T> LiveData<Result<BaseResponse<T>>>.observeParse(
         true -> result.getOrNull()?.also { resp ->
             resp.data?.also { requestCallback.successCallback?.invoke(it) }
                 ?: requestCallback.failureCallback?.invoke(
-                    ApiException(resp)
+                    RequestException(resp)
                 )
-        } ?: requestCallback.failureCallback?.invoke(ApiException("data is null"))
+        } ?: requestCallback.failureCallback?.invoke(RequestException("data is null"))
         false -> {
             result.exceptionOrNull()?.also {
-                requestCallback.failureCallback?.invoke(it as ApiException)
-            } ?: requestCallback.failureCallback?.invoke(ApiException("未知错误"))
+                requestCallback.failureCallback?.invoke(it as RequestException)
+            } ?: requestCallback.failureCallback?.invoke(RequestException("未知错误"))
         }
     }
 }
 
-fun <T> LiveData<BaseResponse<T>>.observeState(
+fun <T> LiveData<ApiResponse<T>>.observeState(
     owner: LifecycleOwner,
     callback: HttpRequestCallback<T>.() -> Unit
 ) {
@@ -49,11 +50,11 @@ fun <T> LiveData<BaseResponse<T>>.observeState(
             requestCallback.emptyCallback?.invoke()
         }
 
-        override fun onFailure(e: ApiException) {
+        override fun onFailure(e: RequestException) {
             requestCallback.failureCallback?.invoke(e)
         }
 
-        override fun onError(data: T?, e: ApiException) {
+        override fun onError(data: T?, e: RequestException) {
             requestCallback.errorCallback?.invoke(data, e)
         }
 
