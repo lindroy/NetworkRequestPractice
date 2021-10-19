@@ -2,10 +2,12 @@ package com.lindroy.networkrequestpractice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
 import com.lindroy.networkrequestpractice.logic.network.observeParse
+import com.lindroy.networkrequestpractice.logic.network.observeState
 import com.lindroy.networkrequestpractice.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -25,14 +27,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        viewModel.loginLiveData.observeParse(this) {
+        viewModel.loginLiveData.observeState(this) {
+            onStart {
+                Log.d("TTT", "请求开始")
+            }
             onSuccess {
                 showToast("登录成功")
                 binding.tvResult.text = it.toString()
             }
+            onEmpty {
+                showToast("数据为空")
+            }
             onFailure {
                 showToast(it.errorMsg.orEmpty())
                 binding.tvResult.text = it.toString()
+            }
+            onError { data, e ->
+                showToast(e.errorMsg.orEmpty())
+            }
+            onFinish {
+                Log.d("TTT", "请求结束")
             }
         }
     }
