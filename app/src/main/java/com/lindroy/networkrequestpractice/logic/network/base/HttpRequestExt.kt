@@ -12,26 +12,6 @@ import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObse
  * @function
  */
 
-fun <T> LiveData<Result<ApiResponse<T>>>.observeParse(
-    owner: LifecycleOwner,
-    callback: HttpRequestCallback<T>.() -> Unit
-) = observe(owner) { result ->
-    val requestCallback = HttpRequestCallback<T>().apply(callback)
-    when (result.isSuccess) {
-        true -> result.getOrNull()?.also { resp ->
-            resp.data?.also { requestCallback.successCallback?.invoke(it) }
-                ?: requestCallback.failureCallback?.invoke(
-                    RequestException(resp)
-                )
-        } ?: requestCallback.failureCallback?.invoke(RequestException("data is null"))
-        false -> {
-            result.exceptionOrNull()?.also {
-                requestCallback.failureCallback?.invoke(it as RequestException)
-            } ?: requestCallback.failureCallback?.invoke(RequestException("未知错误"))
-        }
-    }
-}
-
 fun <T> LiveData<BaseResponse<T>>.observeState(
     owner: LifecycleOwner,
     callback: HttpRequestCallback<T>.() -> Unit
@@ -52,10 +32,6 @@ fun <T> LiveData<BaseResponse<T>>.observeState(
 
         override fun onFailure(e: RequestException) {
             requestCallback.failureCallback?.invoke(e)
-        }
-
-        override fun onError(data: T?, e: RequestException) {
-            requestCallback.errorCallback?.invoke(data, e)
         }
 
         override fun onFinish() {

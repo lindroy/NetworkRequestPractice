@@ -11,7 +11,6 @@ class HttpRequestCallback<T> {
     var successCallback: ((data: T) -> Unit)? = null
     var emptyCallback: (() -> Unit)? = null
     var failureCallback: ((e: RequestException) -> Unit)? = null
-    var errorCallback: ((data: T?, e: RequestException) -> Unit)? = null
     var finishCallback: (() -> Unit)? = null
 
     fun onStart(block: () -> Unit) {
@@ -24,10 +23,6 @@ class HttpRequestCallback<T> {
 
     fun onEmpty(block: () -> Unit) {
         emptyCallback = block
-    }
-
-    fun onError(block: (data: T?, e: RequestException) -> Unit) {
-        errorCallback = block
     }
 
     fun onFailure(block: (e: RequestException) -> Unit) {

@@ -8,10 +8,15 @@ import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseRespon
  * @function
  */
 data class RequestException(
+    val code: Int? = 0,
     val errorMsg: String? = "",
-    val errorCode: Int? = 0
+    val error: String? = null
 ) : Exception() {
 
-    constructor(response: BaseResponse<*>) : this(response.errorMsg, response.errorCode)
+    constructor(response: BaseResponse<*>) : this(
+        response.errorCode,
+        response.errorMsg,
+        response.errorMsg
+    )
 
 }
