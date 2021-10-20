@@ -1,10 +1,8 @@
-package com.lindroy.networkrequestpractice.logic.network
+package com.lindroy.networkrequestpractice.logic.network.base
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.lindroy.networkrequestpractice.logic.model.ApiResponse
-import com.lindroy.networkrequestpractice.logic.network.base.RequestException
-import com.lindroy.networkrequestpractice.logic.network.base.HttpRequestCallback
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
 
 /**
@@ -12,6 +10,7 @@ import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObse
  * @date 2021/10/15
  * @function
  */
+
 fun <T> LiveData<Result<ApiResponse<T>>>.observeParse(
     owner: LifecycleOwner,
     callback: HttpRequestCallback<T>.() -> Unit
