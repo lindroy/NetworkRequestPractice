@@ -6,11 +6,13 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
-import com.lindroy.networkrequestpractice.logic.network.observeParse
-import com.lindroy.networkrequestpractice.logic.network.observeState
+import com.lindroy.networkrequestpractice.logic.network.base.observeParse
+import com.lindroy.networkrequestpractice.logic.network.base.observeState
 import com.lindroy.networkrequestpractice.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "Tag"
 
     private val viewModel by viewModels<MainViewModel>()
 
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun initObserver() {
         viewModel.loginLiveData.observeState(this) {
             onStart {
-                Log.d("TTT", "请求开始")
+                Log.d(TAG, "请求开始")
             }
             onSuccess {
                 showToast("登录成功")
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 showToast(e.errorMsg.orEmpty())
             }
             onFinish {
-                Log.d("TTT", "请求结束")
+                Log.d(TAG, "请求结束")
             }
         }
     }

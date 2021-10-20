@@ -1,4 +1,4 @@
-package com.lindroy.networkrequestpractice.logic.network
+package com.lindroy.networkrequestpractice.logic.network.base
 
 /**
  * @author Lin
@@ -10,8 +10,8 @@ class HttpRequestCallback<T> {
     var startCallback: (() -> Unit)? = null
     var successCallback: ((data: T) -> Unit)? = null
     var emptyCallback: (() -> Unit)? = null
-    var failureCallback: ((e: ApiException) -> Unit)? = null
-    var errorCallback: ((data: T?, e: ApiException) -> Unit)? = null
+    var failureCallback: ((e: RequestException) -> Unit)? = null
+    var errorCallback: ((data: T?, e: RequestException) -> Unit)? = null
     var finishCallback: (() -> Unit)? = null
 
     fun onStart(block: () -> Unit) {
@@ -22,15 +22,15 @@ class HttpRequestCallback<T> {
         successCallback = block
     }
 
-    fun onEmpty(block: () -> Unit){
+    fun onEmpty(block: () -> Unit) {
         emptyCallback = block
     }
 
-    fun onError(block: (data: T?, e: ApiException) -> Unit) {
+    fun onError(block: (data: T?, e: RequestException) -> Unit) {
         errorCallback = block
     }
 
-    fun onFailure(block: (e: ApiException) -> Unit) {
+    fun onFailure(block: (e: RequestException) -> Unit) {
         failureCallback = block
     }
 

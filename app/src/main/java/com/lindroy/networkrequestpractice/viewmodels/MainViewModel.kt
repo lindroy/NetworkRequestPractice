@@ -3,7 +3,8 @@ package com.lindroy.networkrequestpractice.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import com.lindroy.networkrequestpractice.logic.repository.Repository
+import com.lindroy.networkrequestpractice.logic.network.Repository
+import com.lindroy.networkrequestpractice.logic.network.base.repository.BaseRepository
 
 /**
  * @author Lin
