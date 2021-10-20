@@ -3,6 +3,7 @@ package com.lindroy.networkrequestpractice.logic.network.base
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.lindroy.networkrequestpractice.logic.model.ApiResponse
+import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
 
 /**
@@ -31,7 +32,7 @@ fun <T> LiveData<Result<ApiResponse<T>>>.observeParse(
     }
 }
 
-fun <T> LiveData<ApiResponse<T>>.observeState(
+fun <T> LiveData<BaseResponse<T>>.observeState(
     owner: LifecycleOwner,
     callback: HttpRequestCallback<T>.() -> Unit
 ) {
