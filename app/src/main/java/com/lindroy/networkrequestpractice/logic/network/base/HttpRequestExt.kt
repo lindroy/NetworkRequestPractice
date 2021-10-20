@@ -1,36 +1,21 @@
 package com.lindroy.networkrequestpractice.logic.network.base
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import com.google.gson.Gson
 import com.lindroy.networkrequestpractice.logic.model.ApiResponse
+import com.lindroy.networkrequestpractice.logic.model.ErrorBodyModel
 import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
+import retrofit2.HttpException
+import java.net.UnknownHostException
 
 /**
  * @author Lin
  * @date 2021/10/15
  * @function
  */
-
-fun <T> LiveData<Result<ApiResponse<T>>>.observeParse(
-    owner: LifecycleOwner,
-    callback: HttpRequestCallback<T>.() -> Unit
-) = observe(owner) { result ->
-    val requestCallback = HttpRequestCallback<T>().apply(callback)
-    when (result.isSuccess) {
-        true -> result.getOrNull()?.also { resp ->
-            resp.data?.also { requestCallback.successCallback?.invoke(it) }
-                ?: requestCallback.failureCallback?.invoke(
-                    RequestException(resp)
-                )
-        } ?: requestCallback.failureCallback?.invoke(RequestException("data is null"))
-        false -> {
-            result.exceptionOrNull()?.also {
-                requestCallback.failureCallback?.invoke(it as RequestException)
-            } ?: requestCallback.failureCallback?.invoke(RequestException("未知错误"))
-        }
-    }
-}
 
 fun <T> LiveData<BaseResponse<T>>.observeState(
     owner: LifecycleOwner,
@@ -54,14 +39,11 @@ fun <T> LiveData<BaseResponse<T>>.observeState(
             requestCallback.failureCallback?.invoke(e)
         }
 
-        override fun onError(data: T?, e: RequestException) {
-            requestCallback.errorCallback?.invoke(data, e)
-        }
-
         override fun onFinish() {
             requestCallback.finishCallback?.invoke()
         }
 
     })
 }
+
 

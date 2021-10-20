@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
-import com.lindroy.networkrequestpractice.logic.network.base.observeParse
 import com.lindroy.networkrequestpractice.logic.network.base.observeState
 import com.lindroy.networkrequestpractice.viewmodels.MainViewModel
 
@@ -43,9 +42,6 @@ class MainActivity : AppCompatActivity() {
             onFailure {
                 showToast(it.errorMsg.orEmpty())
                 binding.tvResult.text = it.toString()
-            }
-            onError { data, e ->
-                showToast(e.errorMsg.orEmpty())
             }
             onFinish {
                 Log.d(TAG, "请求结束")

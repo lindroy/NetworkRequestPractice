@@ -1,6 +1,5 @@
 package com.lindroy.networkrequestpractice.logic.network
 
-import com.lindroy.networkrequestpractice.logic.network.base.BaseRetrofitBuilder
 import com.lindroy.networkrequestpractice.logic.network.base.repository.BaseRepository
 
 /**
