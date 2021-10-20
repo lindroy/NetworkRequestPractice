@@ -1,10 +1,15 @@
 package com.lindroy.networkrequestpractice.logic.network.base
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import com.google.gson.Gson
 import com.lindroy.networkrequestpractice.logic.model.ApiResponse
+import com.lindroy.networkrequestpractice.logic.model.ErrorBodyModel
 import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
+import retrofit2.HttpException
+import java.net.UnknownHostException
 
 /**
  * @author Lin
@@ -40,4 +45,5 @@ fun <T> LiveData<BaseResponse<T>>.observeState(
 
     })
 }
+
 

@@ -1,6 +1,7 @@
 package com.lindroy.networkrequestpractice.logic.network.base
 
 import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
+import com.lindroy.networkrequestpractice.logic.network.enum.HttpError
 
 /**
  * @author Lin
@@ -18,5 +19,7 @@ data class RequestException(
         response.errorMsg,
         response.errorMsg
     )
+
+    constructor(httpError:HttpError,error: String?):this(httpError.code,httpError.message,error)
 
 }

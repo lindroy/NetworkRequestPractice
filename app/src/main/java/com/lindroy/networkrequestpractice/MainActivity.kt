@@ -43,9 +43,6 @@ class MainActivity : AppCompatActivity() {
                 showToast(it.errorMsg.orEmpty())
                 binding.tvResult.text = it.toString()
             }
-            onError { e->
-                showToast(e.errorMsg.orEmpty())
-            }
             onFinish {
                 Log.d(TAG, "请求结束")
             }

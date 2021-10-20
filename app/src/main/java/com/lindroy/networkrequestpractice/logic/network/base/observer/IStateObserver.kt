@@ -19,13 +19,7 @@ interface IStateObserver<T> : Observer<BaseResponse<T>> {
         when (response) {
             is SuccessResponse -> onSuccess(response.data)
             is EmptyResponse -> onEmpty()
-            is FailureResponse -> onFailure(
-                //Todo(如果是结果码为非200的情况，还需要解析出error参数)
-                RequestException(
-                    response.errorCode,
-                    response.errorMsg,
-                )
-            )
+            is FailureResponse -> onFailure(response.exception)
         }
         onFinish()
     }
