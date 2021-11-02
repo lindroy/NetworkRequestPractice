@@ -27,8 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initObserver()
         binding.btnLogin.setOnClickListener {
-            LoadingDialog.show(this)
-//            viewModel.login()
+            viewModel.login()
         }
         binding.btnLoginWrong.setOnClickListener { viewModel.loginWithWrongPwd() }
     }
@@ -40,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "请求开始")
             }
             onSuccess {
+                Log.d(TAG, "请求成功")
                 showToast("登录成功")
                 binding.tvResult.text = it.toString()
             }
@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 showToast("数据为空")
             }
             onFailure {
+                Log.d(TAG, "请求失败")
                 showToast(it.errorMsg.orEmpty())
                 binding.tvResult.text = it.toString()
             }

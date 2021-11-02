@@ -42,6 +42,13 @@ abstract class BaseRetrofitBuilder {
 
     inline fun <reified T> create(): T = create(T::class.java)
 
+    /**
+     * 子类自定义 OKHttpClient 的配置
+     */
     abstract fun handleOkHttpClientBuilder(builder: OkHttpClient.Builder)
+
+    /**
+     * 配置日志拦截器
+     */
     abstract fun initLoggingInterceptor(): Interceptor?
 }

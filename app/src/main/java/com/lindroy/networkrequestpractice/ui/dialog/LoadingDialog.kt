@@ -20,7 +20,7 @@ import com.lindroy.networkrequestpractice.R
 /**
  * @author Lin
  * @date 2021/10/20
- * @function
+ * @function 加载中对话框
  */
 class LoadingDialog : DialogFragment() {
 

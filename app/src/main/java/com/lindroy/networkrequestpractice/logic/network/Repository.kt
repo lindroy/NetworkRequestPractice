@@ -5,7 +5,7 @@ import com.lindroy.networkrequestpractice.logic.network.base.repository.BaseRepo
 /**
  * @author Lin
  * @date 2021/10/19
- * @function
+ * @function 唯一的数据源
  */
 object Repository : BaseRepository() {
 
