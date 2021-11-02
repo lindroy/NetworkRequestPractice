@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import com.lindroy.networkrequestpractice.logic.network.Repository
+import kotlinx.coroutines.delay
 
 /**
  * @author Lin

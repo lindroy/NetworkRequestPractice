@@ -15,6 +15,8 @@ import com.lindroy.networkrequestpractice.logic.network.base.RequestException
 interface IStateObserver<T> : Observer<BaseResponse<T>> {
 
     override fun onChanged(response: BaseResponse<T>?) {
+        //Todo（onChange()函数在LiveData的value改变之后才会调用，以网络请求为例，则是在网络请求获取到结果后调用，所以这种写法onStart()是无法
+        // 在网络请求之后回调的，这对显示加载中对话框的体验非常不好）
         onStart()
         when (response) {
             is SuccessResponse -> onSuccess(response.data)
@@ -30,12 +32,12 @@ interface IStateObserver<T> : Observer<BaseResponse<T>> {
     fun onStart()
 
     /**
-     * 请求成功，且 data 不为null
+     * 请求成功，且 data 不为 null
      */
     fun onSuccess(data: T)
 
     /**
-     * 请求成功，但 data 为 null 或者 data 是 集合类型但为空
+     * 请求成功，但 data 为 null 或者 data 是集合类型但为空
      */
     fun onEmpty()
 
