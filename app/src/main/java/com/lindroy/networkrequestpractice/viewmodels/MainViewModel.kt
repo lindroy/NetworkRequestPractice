@@ -3,11 +3,7 @@ package com.lindroy.networkrequestpractice.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
-import com.lindroy.networkrequestpractice.logic.model.LoginModel
 import com.lindroy.networkrequestpractice.logic.network.Repository
-import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
-import kotlinx.coroutines.launch
 
 /**
  * @author Lin
