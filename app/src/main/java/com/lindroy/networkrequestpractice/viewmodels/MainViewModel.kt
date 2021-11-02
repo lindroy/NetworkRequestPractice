@@ -3,8 +3,11 @@ package com.lindroy.networkrequestpractice.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import com.lindroy.networkrequestpractice.logic.model.LoginModel
 import com.lindroy.networkrequestpractice.logic.network.Repository
-import kotlinx.coroutines.delay
+import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
+import kotlinx.coroutines.launch
 
 /**
  * @author Lin
@@ -16,8 +19,8 @@ class MainViewModel : ViewModel() {
     private val loginAction = MutableLiveData<Boolean>()
 
     /**
-     * loginAction在这里只传递布尔值，不传递密码，在实际项目中，会使用DataBinding绑定xml布局和ViewModel，
-     * 不需要从Activity或者Fragment中把密码传入ViewModel
+     * loginAction 在这里只传递布尔值，不传递密码，在实际项目中，会使用 DataBinding 绑定 xml 布局和 ViewModel，
+     * 不需要从 Activity 或者 Fragment 中把密码传入 ViewModel
      */
     val loginLiveData = loginAction.switchMap {
         if (it) {

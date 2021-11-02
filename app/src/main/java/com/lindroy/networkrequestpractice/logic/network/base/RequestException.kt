@@ -20,6 +20,10 @@ data class RequestException(
         response.errorMsg
     )
 
-    constructor(httpError:HttpError,error: String?):this(httpError.code,httpError.message,error)
+    constructor(httpError: HttpError, error: String?) : this(
+        httpError.code,
+        httpError.message,
+        error
+    )
 
 }
