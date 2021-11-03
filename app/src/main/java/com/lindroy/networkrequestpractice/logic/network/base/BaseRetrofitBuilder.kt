@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * @author Lin
  * @date 2021/10/14
- * @function
+ * @function Retrofit 构建器基类
  */
 
 private const val TIME_OUT_LENGTH = 8L

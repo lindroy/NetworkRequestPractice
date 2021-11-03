@@ -3,22 +3,25 @@ package com.lindroy.networkrequestpractice.logic.network.base.observer
 import androidx.lifecycle.Observer
 import com.lindroy.networkrequestpractice.logic.model.EmptyResponse
 import com.lindroy.networkrequestpractice.logic.model.FailureResponse
+import com.lindroy.networkrequestpractice.logic.model.StartResponse
 import com.lindroy.networkrequestpractice.logic.model.SuccessResponse
 import com.lindroy.networkrequestpractice.logic.network.base.RequestException
 
 /**
  * @author Lin
  * @date 2021/10/15
- * @function
+ * @function 自定义 Observer，监听 LiveData 的值的变化
  */
 
 interface IStateObserver<T> : Observer<BaseResponse<T>> {
 
     override fun onChanged(response: BaseResponse<T>?) {
-        //Todo（onChange()函数在LiveData的value改变之后才会调用，以网络请求为例，则是在网络请求获取到结果后调用，所以这种写法onStart()是无法
-        // 在网络请求之后回调的，这对显示加载中对话框的体验非常不好）
-        onStart()
         when (response) {
+            is StartResponse -> {
+                //onStart()回调后不能直接就调用onFinish()，必须等待请求结束
+                onStart()
+                return
+            }
             is SuccessResponse -> onSuccess(response.data)
             is EmptyResponse -> onEmpty()
             is FailureResponse -> onFailure(response.exception)

@@ -19,6 +19,8 @@ open class ApiResponse<T>(
         get() = errorCode == 0
 }
 
+class StartResponse<T> : ApiResponse<T>()
+
 data class SuccessResponse<T>(override val data: T) : ApiResponse<T>(data)
 
 class EmptyResponse<T> : ApiResponse<T>()

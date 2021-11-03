@@ -43,7 +43,6 @@ class LoadingDialog : DialogFragment() {
         dialog?.window?.apply {
             setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             val dialogSize = (screenWidth * 0.25).toInt()
-            Log.d("TTT","dialogSize=$dialogSize")
             setLayout(dialogSize, dialogSize)
         }
     }
