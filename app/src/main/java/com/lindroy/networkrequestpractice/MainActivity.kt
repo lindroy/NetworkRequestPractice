@@ -1,13 +1,12 @@
 package com.lindroy.networkrequestpractice
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.widget.addTextChangedListener
+import androidx.appcompat.app.AppCompatActivity
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
+import com.lindroy.networkrequestpractice.logic.network.base.observeResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observeState
 import com.lindroy.networkrequestpractice.ui.dialog.LoadingDialog
 import com.lindroy.networkrequestpractice.viewmodels.MainViewModel
@@ -32,14 +31,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.login()
         }
         binding.btnLoginWrong.setOnClickListener { viewModel.loginWithWrongPwd() }
-        val edit  = EditText(this)
-        edit.addTextChangedListener {
-
-        }
     }
 
     private fun initObserver() {
-        viewModel.loginLiveData.observeState(this) {
+       /* viewModel.loginLiveData.observeState(this) {
             onStart {
                 LoadingDialog.show(activity)
                 Log.d(TAG, "请求开始")
@@ -61,6 +56,15 @@ class MainActivity : AppCompatActivity() {
                 LoadingDialog.dismiss(activity)
                 Log.d(TAG, "请求结束")
             }
+        }*/
+        viewModel.loginLiveData.observeResponse(this, onStart = {
+            LoadingDialog.show(this)
+            Log.d(TAG, "请求开始")
+            return@observeResponse
+        }, onFinish = {
+            LoadingDialog.dismiss(activity)
+        }) {
+            binding.tvResult.text = it.toString()
         }
     }
 
