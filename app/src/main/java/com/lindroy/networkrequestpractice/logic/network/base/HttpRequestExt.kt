@@ -36,7 +36,6 @@ fun <T> LiveData<BaseResponse<T>>.observeState(
         override fun onFinish() {
             requestCallback.finishCallback?.invoke()
         }
-
     })
 }
 

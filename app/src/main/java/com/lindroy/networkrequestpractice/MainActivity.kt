@@ -3,8 +3,10 @@ package com.lindroy.networkrequestpractice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
 import com.lindroy.networkrequestpractice.logic.network.base.observeState
 import com.lindroy.networkrequestpractice.ui.dialog.LoadingDialog
@@ -30,6 +32,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.login()
         }
         binding.btnLoginWrong.setOnClickListener { viewModel.loginWithWrongPwd() }
+        val edit  = EditText(this)
+        edit.addTextChangedListener {
+
+        }
     }
 
     private fun initObserver() {
