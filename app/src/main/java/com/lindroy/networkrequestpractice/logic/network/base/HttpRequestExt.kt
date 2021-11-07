@@ -2,9 +2,6 @@ package com.lindroy.networkrequestpractice.logic.network.base
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.lindroy.networkrequestpractice.logic.model.StartResponse
-import com.lindroy.networkrequestpractice.logic.model.SuccessResponse
-import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
 
 /**

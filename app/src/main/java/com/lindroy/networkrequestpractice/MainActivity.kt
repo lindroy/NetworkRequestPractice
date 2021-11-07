@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObserver() {
-       /* viewModel.loginLiveData.observeState(this) {
+        viewModel.loginLiveData.observeState(this) {
             onStart {
                 LoadingDialog.show(activity)
                 Log.d(TAG, "请求开始")
@@ -56,16 +56,15 @@ class MainActivity : AppCompatActivity() {
                 LoadingDialog.dismiss(activity)
                 Log.d(TAG, "请求结束")
             }
-        }*/
-        viewModel.loginLiveData.observeResponse(this, onStart = {
+        }
+
+        /*viewModel.loginLiveData.observeResponse(this, onStart = {
             LoadingDialog.show(this)
-            Log.d(TAG, "请求开始")
-            return@observeResponse
         }, onFinish = {
             LoadingDialog.dismiss(activity)
         }) {
             binding.tvResult.text = it.toString()
-        }
+        }*/
     }
 
     private fun showToast(text: String) {

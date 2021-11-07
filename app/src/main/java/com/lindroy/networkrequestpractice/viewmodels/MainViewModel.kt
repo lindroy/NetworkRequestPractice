@@ -26,6 +26,9 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 点击登录
+     */
     fun login() {
         loginAction.value = true
     }

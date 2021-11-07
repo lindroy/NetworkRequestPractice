@@ -5,6 +5,7 @@ import com.lindroy.networkrequestpractice.logic.model.EmptyResponse
 import com.lindroy.networkrequestpractice.logic.model.FailureResponse
 import com.lindroy.networkrequestpractice.logic.model.StartResponse
 import com.lindroy.networkrequestpractice.logic.model.SuccessResponse
+import com.lindroy.networkrequestpractice.logic.network.base.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.RequestException
 
 /**
