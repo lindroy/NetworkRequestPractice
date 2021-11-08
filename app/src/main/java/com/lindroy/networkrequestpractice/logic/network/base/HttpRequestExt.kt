@@ -3,6 +3,7 @@ package com.lindroy.networkrequestpractice.logic.network.base
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
+import com.lindroy.networkrequestpractice.base.App
 
 /**
  * @author Lin
@@ -15,11 +16,15 @@ import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObse
  */
 inline fun <T> LiveData<BaseResponse<T>>.observeState(
     owner: LifecycleOwner,
+    isShowLoading: Boolean = true,
     crossinline callback: HttpRequestCallback<T>.() -> Unit
 ) {
     val requestCallback = HttpRequestCallback<T>().apply(callback)
     observe(owner, object : IStateObserver<T> {
         override fun onStart() {
+            if (isShowLoading) {
+                App.eventViewModel.showLoading()
+            }
             requestCallback.startCallback?.invoke()
         }
 
@@ -36,6 +41,9 @@ inline fun <T> LiveData<BaseResponse<T>>.observeState(
         }
 
         override fun onFinish() {
+            if (isShowLoading){
+                App.eventViewModel.dismissLoading()
+            }
             requestCallback.finishCallback?.invoke()
         }
     })
@@ -46,6 +54,7 @@ inline fun <T> LiveData<BaseResponse<T>>.observeState(
  */
 inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
     owner: LifecycleOwner,
+    isShowLoading: Boolean = true,
     crossinline onStart: OnUnitCallback = {},
     crossinline onEmpty: OnUnitCallback = {},
     crossinline onFailure: OnFailureCallback = { e: RequestException -> },
@@ -54,6 +63,9 @@ inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
 ) {
     observe(owner, object : IStateObserver<T> {
         override fun onStart() {
+            if (isShowLoading){
+                App.eventViewModel.showLoading()
+            }
             onStart()
         }
 
@@ -70,6 +82,9 @@ inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
         }
 
         override fun onFinish() {
+            if (isShowLoading) {
+                App.eventViewModel.dismissLoading()
+            }
             onFinish()
         }
     })

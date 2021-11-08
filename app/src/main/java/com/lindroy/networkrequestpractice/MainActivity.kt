@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import com.lindroy.networkrequestpractice.databinding.ActivityMainBinding
-import com.lindroy.networkrequestpractice.logic.network.base.observeResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observeState
-import com.lindroy.networkrequestpractice.ui.dialog.LoadingDialog
+import com.lindroy.networkrequestpractice.base.BaseActivity
 import com.lindroy.networkrequestpractice.viewmodels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    private val activity = this
 
     private val TAG = "Tag"
 
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun initObserver() {
         viewModel.loginLiveData.observeState(this) {
             onStart {
-                LoadingDialog.show(activity)
+//                LoadingDialog.show(activity)
                 Log.d(TAG, "请求开始")
             }
             onSuccess {
@@ -53,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 binding.tvResult.text = it.toString()
             }
             onFinish {
-                LoadingDialog.dismiss(activity)
+//                LoadingDialog.dismiss(activity)
                 Log.d(TAG, "请求结束")
             }
         }
