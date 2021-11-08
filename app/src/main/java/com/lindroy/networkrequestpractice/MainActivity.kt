@@ -46,7 +46,7 @@ class MainActivity : BaseActivity() {
             }
             onFailure {
                 Log.d(TAG, "请求失败")
-                showToast(it.errorMsg.orEmpty())
+//                showToast(it.errorMsg.orEmpty())
                 binding.tvResult.text = it.toString()
             }
             onFinish {

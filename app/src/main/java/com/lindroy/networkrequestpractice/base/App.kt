@@ -1,6 +1,8 @@
 package com.lindroy.networkrequestpractice.base
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -21,11 +23,14 @@ class App : Application(), ViewModelStoreOwner {
     override fun getViewModelStore(): ViewModelStore = ViewModelStore()
 
     companion object{
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context: Context
         lateinit var eventViewModel: EventViewModel
     }
 
     override fun onCreate() {
         super.onCreate()
+        context = applicationContext
         eventViewModel =  appViewModelProvider[EventViewModel::class.java]
     }
 }

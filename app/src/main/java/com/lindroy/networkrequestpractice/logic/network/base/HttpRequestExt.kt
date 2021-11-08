@@ -17,6 +17,7 @@ import com.lindroy.networkrequestpractice.base.App
 inline fun <T> LiveData<BaseResponse<T>>.observeState(
     owner: LifecycleOwner,
     isShowLoading: Boolean = true,
+    isShowErrorToast: Boolean = true,
     crossinline callback: HttpRequestCallback<T>.() -> Unit
 ) {
     val requestCallback = HttpRequestCallback<T>().apply(callback)
@@ -37,11 +38,14 @@ inline fun <T> LiveData<BaseResponse<T>>.observeState(
         }
 
         override fun onFailure(e: RequestException) {
+            if (isShowErrorToast) {
+                App.eventViewModel.showToast(e.errorMsg)
+            }
             requestCallback.failureCallback?.invoke(e)
         }
 
         override fun onFinish() {
-            if (isShowLoading){
+            if (isShowLoading) {
                 App.eventViewModel.dismissLoading()
             }
             requestCallback.finishCallback?.invoke()
@@ -63,7 +67,7 @@ inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
 ) {
     observe(owner, object : IStateObserver<T> {
         override fun onStart() {
-            if (isShowLoading){
+            if (isShowLoading) {
                 App.eventViewModel.showLoading()
             }
             onStart()

@@ -1,5 +1,6 @@
 package com.lindroy.networkrequestpractice.base
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,13 +10,20 @@ import androidx.lifecycle.ViewModel
  * @function 全局 ViewModel，用于处理全局消息
  */
 class EventViewModel : ViewModel() {
-    val loadingStatus = MutableLiveData<Boolean>()
+    val loadingLiveData = MutableLiveData<Boolean>()
+
+    val toastLiveData = MutableLiveData<String?>()
 
     fun showLoading() {
-        loadingStatus.value = true
+        loadingLiveData.value = true
     }
 
     fun dismissLoading() {
-        loadingStatus.value = false
+        loadingLiveData.value = false
     }
+
+    fun showToast(msg: String?) {
+        toastLiveData.value = msg
+    }
+
 }
