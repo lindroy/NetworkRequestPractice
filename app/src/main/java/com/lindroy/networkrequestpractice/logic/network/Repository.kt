@@ -9,7 +9,7 @@ import com.lindroy.networkrequestpractice.logic.network.base.repository.BaseRepo
  */
 object Repository : BaseRepository() {
 
-    fun login(pwd: String) = fire {
+    suspend fun login(pwd: String) = fire {
         NetworkDataSource.login(pwd)
     }
 

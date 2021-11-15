@@ -1,9 +1,13 @@
 package com.lindroy.networkrequestpractice.logic.network.base
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
+import android.util.Log
+import androidx.lifecycle.*
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
 import com.lindroy.networkrequestpractice.base.App
+import com.lindroy.networkrequestpractice.logic.model.StartResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 /**
  * @author Lin
@@ -92,6 +96,17 @@ inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
             onFinish()
         }
     })
+}
+
+fun <T> MutableLiveData<BaseResponse<T>>.request(
+    viewModel: ViewModel,
+    context: CoroutineContext = Dispatchers.IO,
+    request: suspend () -> BaseResponse<T>
+) {
+    viewModel.viewModelScope.launch(context) {
+        this@request.postValue(StartResponse())
+        this@request.postValue(request())
+    }
 }
 
 

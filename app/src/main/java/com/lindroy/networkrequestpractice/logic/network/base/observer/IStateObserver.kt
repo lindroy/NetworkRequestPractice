@@ -1,5 +1,6 @@
 package com.lindroy.networkrequestpractice.logic.network.base.observer
 
+import android.util.Log
 import androidx.lifecycle.Observer
 import com.lindroy.networkrequestpractice.logic.model.EmptyResponse
 import com.lindroy.networkrequestpractice.logic.model.FailureResponse
@@ -7,6 +8,10 @@ import com.lindroy.networkrequestpractice.logic.model.StartResponse
 import com.lindroy.networkrequestpractice.logic.model.SuccessResponse
 import com.lindroy.networkrequestpractice.logic.network.base.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.RequestException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
  * @author Lin
