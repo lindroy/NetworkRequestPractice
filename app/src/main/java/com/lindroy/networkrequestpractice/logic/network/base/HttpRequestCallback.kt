@@ -5,31 +5,36 @@ package com.lindroy.networkrequestpractice.logic.network.base
  * @date 2021/10/15
  * @function 网络请求回调
  */
+
+typealias OnSuccessCallback<T> = (data: T) -> Unit
+typealias OnFailureCallback = (e: RequestException) -> Unit
+typealias OnUnitCallback = () -> Unit
+
 class HttpRequestCallback<T> {
 
-    var startCallback: (() -> Unit)? = null
-    var successCallback: ((data: T) -> Unit)? = null
-    var emptyCallback: (() -> Unit)? = null
-    var failureCallback: ((e: RequestException) -> Unit)? = null
-    var finishCallback: (() -> Unit)? = null
+    var startCallback: OnUnitCallback? = null
+    var successCallback: OnSuccessCallback<T>? = null
+    var emptyCallback: OnUnitCallback? = null
+    var failureCallback: OnFailureCallback? = null
+    var finishCallback: OnUnitCallback? = null
 
-    fun onStart(block: () -> Unit) {
+    fun onStart(block: OnUnitCallback) {
         startCallback = block
     }
 
-    fun onSuccess(block: (T) -> Unit) {
+    fun onSuccess(block: OnSuccessCallback<T>) {
         successCallback = block
     }
 
-    fun onEmpty(block: () -> Unit) {
+    fun onEmpty(block: OnUnitCallback) {
         emptyCallback = block
     }
 
-    fun onFailure(block: (e: RequestException) -> Unit) {
+    fun onFailure(block: OnFailureCallback) {
         failureCallback = block
     }
 
-    fun onFinish(block: () -> Unit) {
+    fun onFinish(block: OnUnitCallback) {
         finishCallback = block
     }
 }

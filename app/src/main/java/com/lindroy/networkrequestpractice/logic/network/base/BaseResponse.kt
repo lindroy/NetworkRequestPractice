@@ -1,4 +1,4 @@
-package com.lindroy.networkrequestpractice.logic.network.base.observer
+package com.lindroy.networkrequestpractice.logic.network.base
 
 /**
  * @author Lin

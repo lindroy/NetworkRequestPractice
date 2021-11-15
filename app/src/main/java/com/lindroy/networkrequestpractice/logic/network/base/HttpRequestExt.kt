@@ -2,8 +2,8 @@ package com.lindroy.networkrequestpractice.logic.network.base
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
+import com.lindroy.networkrequestpractice.base.App
 
 /**
  * @author Lin
@@ -11,13 +11,21 @@ import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObse
  * @function
  */
 
-fun <T> LiveData<BaseResponse<T>>.observeState(
+/**
+ * 监听 LiveData 的值的变化，回调为 DSL 的形式
+ */
+inline fun <T> LiveData<BaseResponse<T>>.observeState(
     owner: LifecycleOwner,
-    callback: HttpRequestCallback<T>.() -> Unit
+    isShowLoading: Boolean = true,
+    isShowErrorToast: Boolean = true,
+    crossinline callback: HttpRequestCallback<T>.() -> Unit
 ) {
     val requestCallback = HttpRequestCallback<T>().apply(callback)
     observe(owner, object : IStateObserver<T> {
         override fun onStart() {
+            if (isShowLoading) {
+                App.eventViewModel.showLoading()
+            }
             requestCallback.startCallback?.invoke()
         }
 
@@ -30,13 +38,59 @@ fun <T> LiveData<BaseResponse<T>>.observeState(
         }
 
         override fun onFailure(e: RequestException) {
+            if (isShowErrorToast) {
+                App.eventViewModel.showToast(e.errorMsg)
+            }
             requestCallback.failureCallback?.invoke(e)
         }
 
         override fun onFinish() {
+            if (isShowLoading) {
+                App.eventViewModel.dismissLoading()
+            }
             requestCallback.finishCallback?.invoke()
         }
+    })
+}
 
+/**
+ * 监听 LiveData 的值的变化
+ */
+inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
+    owner: LifecycleOwner,
+    isShowLoading: Boolean = true,
+    crossinline onStart: OnUnitCallback = {},
+    crossinline onEmpty: OnUnitCallback = {},
+    crossinline onFailure: OnFailureCallback = { e: RequestException -> },
+    crossinline onFinish: OnUnitCallback = {},
+    crossinline onSuccess: OnSuccessCallback<T>
+) {
+    observe(owner, object : IStateObserver<T> {
+        override fun onStart() {
+            if (isShowLoading) {
+                App.eventViewModel.showLoading()
+            }
+            onStart()
+        }
+
+        override fun onSuccess(data: T) {
+            onSuccess(data)
+        }
+
+        override fun onEmpty() {
+            onEmpty()
+        }
+
+        override fun onFailure(e: RequestException) {
+            onFailure(e)
+        }
+
+        override fun onFinish() {
+            if (isShowLoading) {
+                App.eventViewModel.dismissLoading()
+            }
+            onFinish()
+        }
     })
 }
 

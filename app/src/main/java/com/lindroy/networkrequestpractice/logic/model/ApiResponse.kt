@@ -1,7 +1,7 @@
 package com.lindroy.networkrequestpractice.logic.model
 
 import com.lindroy.networkrequestpractice.logic.network.base.RequestException
-import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
+import com.lindroy.networkrequestpractice.logic.network.base.BaseResponse
 
 /**
  * @author Lin

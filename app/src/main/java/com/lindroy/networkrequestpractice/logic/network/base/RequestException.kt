@@ -1,6 +1,5 @@
 package com.lindroy.networkrequestpractice.logic.network.base
 
-import com.lindroy.networkrequestpractice.logic.network.base.observer.BaseResponse
 import com.lindroy.networkrequestpractice.logic.network.enum.HttpError
 
 /**
