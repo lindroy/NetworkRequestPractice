@@ -100,7 +100,7 @@ inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
 
 fun <T> MutableLiveData<BaseResponse<T>>.request(
     viewModel: ViewModel,
-    context: CoroutineContext = Dispatchers.IO,
+    context: CoroutineContext = Dispatchers.Main,
     request: suspend () -> BaseResponse<T>
 ) {
     viewModel.viewModelScope.launch(context) {

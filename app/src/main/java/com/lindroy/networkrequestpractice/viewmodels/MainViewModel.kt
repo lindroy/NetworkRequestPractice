@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
 
     fun login() {
         loginLiveData.request(this) {
-            Repository.login("PuKxVxvMzBp2EJM")
+            Repository.login("123456")
         }
     }
 
