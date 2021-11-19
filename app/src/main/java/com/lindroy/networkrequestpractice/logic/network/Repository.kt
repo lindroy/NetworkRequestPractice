@@ -13,4 +13,8 @@ object Repository : BaseRepository() {
         NetworkDataSource.login(pwd)
     }
 
+    suspend fun loginFlow(pwd: String) = water {
+        NetworkDataSource.login(pwd)
+    }
+
 }

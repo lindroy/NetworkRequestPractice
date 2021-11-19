@@ -1,6 +1,5 @@
 package com.lindroy.networkrequestpractice.base
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 

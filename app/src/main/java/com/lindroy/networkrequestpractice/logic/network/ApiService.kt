@@ -2,6 +2,7 @@ package com.lindroy.networkrequestpractice.logic.network
 
 import com.lindroy.networkrequestpractice.logic.model.ApiResponse
 import com.lindroy.networkrequestpractice.logic.model.LoginModel
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.POST
 import retrofit2.http.Query
 

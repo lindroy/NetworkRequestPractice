@@ -9,4 +9,5 @@ object NetworkDataSource {
     private val apiService = RetrofitBuilder.create<ApiService>()
 
     suspend fun login(pwd: String) = apiService.login(password = pwd)
+
 }
