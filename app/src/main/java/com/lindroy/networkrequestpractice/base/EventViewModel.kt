@@ -1,7 +1,8 @@
 package com.lindroy.networkrequestpractice.base
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.lindroy.networkrequestpractice.util.launchFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  * @author Lin
@@ -9,20 +10,27 @@ import androidx.lifecycle.ViewModel
  * @function 全局 ViewModel，用于处理全局消息
  */
 class EventViewModel : ViewModel() {
-    val loadingLiveData = MutableLiveData<Boolean>()
 
-    val toastLiveData = MutableLiveData<String?>()
+    val loadingFlow = MutableSharedFlow<Boolean>()
+
+    val toastFlow = MutableSharedFlow<String?>()
 
     fun showLoading() {
-        loadingLiveData.value = true
+        launchFlow {
+            loadingFlow.emit(true)
+        }
     }
 
     fun dismissLoading() {
-        loadingLiveData.value = false
+        launchFlow {
+            loadingFlow.emit(false)
+        }
     }
 
     fun showToast(msg: String?) {
-        toastLiveData.value = msg
+        launchFlow {
+            toastFlow.emit(msg)
+        }
     }
 
 }

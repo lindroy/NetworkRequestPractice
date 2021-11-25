@@ -2,15 +2,11 @@ package com.lindroy.networkrequestpractice.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.lindroy.networkrequestpractice.TAG
-import com.lindroy.networkrequestpractice.base.App
 import com.lindroy.networkrequestpractice.logic.model.*
 import com.lindroy.networkrequestpractice.logic.network.Repository
 import com.lindroy.networkrequestpractice.logic.network.base.BaseResponse
-import com.lindroy.networkrequestpractice.logic.network.base.launchFlow
-import com.lindroy.networkrequestpractice.logic.network.base.request
+import com.lindroy.networkrequestpractice.util.launchFlow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 /**
  * @author Lin
@@ -27,8 +23,7 @@ class MainViewModel : ViewModel() {
 
     fun loginWithWrongPwd() {
        launchFlow{
-           Repository.loginFlow("12345").request {
-               Log.d("GGG","resp = $it")
+           Repository.loginFlow("12345").collect {
                _loginFlow.tryEmit(it)
            }
        }
@@ -36,11 +31,9 @@ class MainViewModel : ViewModel() {
 
     fun login() {
         launchFlow {
-            Repository.loginFlow("PuKxVxvMzBp2EJM").request {
-
+            Repository.loginFlow("PuKxVxvMzBp2EJM").collect {
                _loginFlow.tryEmit(it)
             }
-
         }
     }
 }

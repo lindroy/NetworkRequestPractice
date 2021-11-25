@@ -19,113 +19,8 @@ import kotlin.coroutines.CoroutineContext
  */
 
 /**
- * 监听 LiveData 的值的变化，回调为 DSL 的形式
+ * 监听 Flow 的值的变化，回调为 DSL 的形式
  */
-inline fun <T> LiveData<BaseResponse<T>>.observeState(
-    owner: LifecycleOwner,
-    isShowLoading: Boolean = true,
-    isShowErrorToast: Boolean = true,
-    crossinline callback: HttpRequestCallback<T>.() -> Unit
-) {
-    val requestCallback = HttpRequestCallback<T>().apply(callback)
-    observe(owner, object : IStateObserver<T> {
-        override fun onStart() {
-            if (isShowLoading) {
-                App.eventViewModel.showLoading()
-            }
-            requestCallback.startCallback?.invoke()
-        }
-
-        override fun onSuccess(data: T) {
-            requestCallback.successCallback?.invoke(data)
-        }
-
-        override fun onEmpty() {
-            requestCallback.emptyCallback?.invoke()
-        }
-
-        override fun onFailure(e: RequestException) {
-            if (isShowErrorToast) {
-                App.eventViewModel.showToast(e.errorMsg)
-            }
-            requestCallback.failureCallback?.invoke(e)
-        }
-
-        override fun onFinish() {
-            if (isShowLoading) {
-                App.eventViewModel.dismissLoading()
-            }
-            requestCallback.finishCallback?.invoke()
-        }
-    })
-}
-
-/**
- * 监听 LiveData 的值的变化
- */
-inline fun <T> LiveData<BaseResponse<T>>.observeResponse(
-    owner: LifecycleOwner,
-    isShowLoading: Boolean = true,
-    crossinline onStart: OnUnitCallback = {},
-    crossinline onEmpty: OnUnitCallback = {},
-    crossinline onFailure: OnFailureCallback = { e: RequestException -> },
-    crossinline onFinish: OnUnitCallback = {},
-    crossinline onSuccess: OnSuccessCallback<T>
-) {
-    observe(owner, object : IStateObserver<T> {
-        override fun onStart() {
-            if (isShowLoading) {
-                App.eventViewModel.showLoading()
-            }
-            onStart()
-        }
-
-        override fun onSuccess(data: T) {
-            onSuccess(data)
-        }
-
-        override fun onEmpty() {
-            onEmpty()
-        }
-
-        override fun onFailure(e: RequestException) {
-            onFailure(e)
-        }
-
-        override fun onFinish() {
-            if (isShowLoading) {
-                App.eventViewModel.dismissLoading()
-            }
-            onFinish()
-        }
-    })
-}
-
-fun <T> MutableLiveData<BaseResponse<T>>.request(
-    viewModel: ViewModel,
-    context: CoroutineContext = Dispatchers.Main,
-    request: suspend () -> BaseResponse<T>
-) {
-    viewModel.viewModelScope.launch(context) {
-        this@request.postValue(StartResponse())
-        this@request.postValue(request())
-    }
-}
-
-fun ViewModel.launchFlow(
-    block: suspend CoroutineScope.() -> Unit
-) {
-    viewModelScope.launch { block() }
-}
-
-suspend fun <T> Flow<BaseResponse<T>>.request(
-    block: (BaseResponse<T>) -> Unit
-) {
-    this.collect { response ->
-        block.invoke(response)
-    }
-}
-
 suspend inline fun <T> Flow<BaseResponse<T>>.observeState(
     isShowLoading: Boolean = true,
     isShowErrorToast: Boolean = true,
@@ -164,6 +59,9 @@ suspend inline fun <T> Flow<BaseResponse<T>>.observeState(
     }
 }
 
+/**
+ * 监听 LiveData 的值的变化
+ */
 suspend inline fun <T> Flow<BaseResponse<T>>.observeResponse(
     isShowLoading: Boolean = true,
     isShowErrorToast: Boolean = true,
