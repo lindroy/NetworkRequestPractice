@@ -1,16 +1,11 @@
 package com.lindroy.networkrequestpractice.logic.network.base
 
 import android.util.Log
-import androidx.lifecycle.*
 import com.lindroy.networkrequestpractice.TAG
-import com.lindroy.networkrequestpractice.logic.network.base.observer.IStateObserver
 import com.lindroy.networkrequestpractice.base.App
 import com.lindroy.networkrequestpractice.logic.model.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author Lin
@@ -60,7 +55,7 @@ suspend inline fun <T> Flow<BaseResponse<T>>.observeState(
 }
 
 /**
- * 监听 LiveData 的值的变化
+ * 监听 FLow 的值的变化
  */
 suspend inline fun <T> Flow<BaseResponse<T>>.observeResponse(
     isShowLoading: Boolean = true,

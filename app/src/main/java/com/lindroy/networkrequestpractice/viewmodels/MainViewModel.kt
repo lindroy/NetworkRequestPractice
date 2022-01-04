@@ -1,19 +1,19 @@
 package com.lindroy.networkrequestpractice.viewmodels
 
-import android.util.Log
-import androidx.lifecycle.*
-import com.lindroy.networkrequestpractice.logic.model.*
+import androidx.lifecycle.ViewModel
+import com.lindroy.networkrequestpractice.logic.model.LoginModel
 import com.lindroy.networkrequestpractice.logic.network.Repository
 import com.lindroy.networkrequestpractice.logic.network.base.BaseResponse
 import com.lindroy.networkrequestpractice.util.launchFlow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author Lin
  * @date 2021/10/15
  * @function
  */
-
 
 class MainViewModel : ViewModel() {
 
