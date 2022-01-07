@@ -12,8 +12,9 @@ open class ApiResponse<T>(
     override val data: T? = null,
     override val errorCode: Int? = null,
     override val errorMsg: String? = null,
-    open val exception: RequestException? = null,
 ) : BaseResponse<T>() {
+
+    constructor(exception: RequestException) : this(null, exception.code, exception.errorMsg)
 
     override val success: Boolean
         get() = errorCode == 0
@@ -25,6 +26,6 @@ data class SuccessResponse<T>(override val data: T) : ApiResponse<T>(data)
 
 class EmptyResponse<T> : ApiResponse<T>()
 
-data class FailureResponse<T>(override val exception: RequestException) :
+data class FailureResponse<T>(val exception: RequestException) :
     ApiResponse<T>(exception = exception)
 
