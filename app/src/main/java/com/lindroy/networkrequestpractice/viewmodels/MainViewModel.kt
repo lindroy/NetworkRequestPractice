@@ -17,13 +17,13 @@ class MainViewModel : ViewModel() {
 
     fun loginWithWrongPwd() {
         loginLiveData.request(this) {
-            Repository.login("PuKxVxvMzBp2EJM")
+            Repository.login("123456")
         }
     }
 
     fun login() {
         loginLiveData.request(this) {
-            Repository.login("123456")
+            Repository.login("PuKxVxvMzBp2EJM")
         }
     }
 
